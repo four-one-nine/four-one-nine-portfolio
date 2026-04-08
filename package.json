@@ -1,0 +1,17 @@
+{
+  "name": "four-one-nine-portfolio",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace=apps/web",
+    "dev:cms": "npm run dev --workspace=apps/cms",
+    "build": "npm run build --workspaces",
+    "build:web": "npm run build --workspace=apps/web",
+    "build:cms": "npm run build --workspace=apps/cms"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  }
+}
