@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_SERVER_URL: https://419.software
     ports:
       - '3053:3000'
     depends_on:
