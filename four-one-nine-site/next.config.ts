@@ -67,12 +67,18 @@ const nextConfig: NextConfig = {
     includePaths: [payloadScssPath],
   },
 
-  webpack: (webpackConfig) => {
+  webpack: (webpackConfig, { isServer }) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
       '.mjs': ['.mts', '.mjs'],
     }
+    
+    // Handle CSS files from node_modules during SSR
+    if (isServer) {
+      webpackConfig.resolve.conditionNames = ['...', 'style']
+    }
+    
     return webpackConfig
   },
 
@@ -98,4 +104,4 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default withPayload(nextConfig, { devBundleServerPackages: false })
+export default withPayload(nextConfig)
