@@ -40,6 +40,14 @@ if (S3_PUBLIC_URL) {
 const nextConfig: NextConfig = {
   output: 'standalone',
 
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '2mb',
+    },
+  },
+
+  serverExternalPackages: ['sharp', '@payloadcms/*', 'payload'],
+
   images: {
     localPatterns: [
       {
