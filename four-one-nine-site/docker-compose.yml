@@ -11,6 +11,8 @@ services:
       - mongo
     env_file:
       - .env
+    volumes:
+      - media:/app/public/media
 
   mongo:
     image: mongo:latest
@@ -25,3 +27,4 @@ services:
 
 volumes:
   data:
+  media:
