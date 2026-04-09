@@ -41,6 +41,11 @@ const nextConfig: NextConfig = {
   output: 'standalone',
 
   images: {
+    localPatterns: [
+      {
+        pathname: '/api/media/file/**',
+      },
+    ],
     remotePatterns: imageHostnames.map((item) => {
       const url = new URL(item)
       return {
