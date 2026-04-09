@@ -62,6 +62,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
+# Copy server files for Next.js 16 server actions
+COPY --from=builder --chown=nextjs:nodejs /app/.next/server ./.next/server
+
 USER nextjs
 
 EXPOSE 3000
