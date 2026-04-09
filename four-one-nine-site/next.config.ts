@@ -30,19 +30,24 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   : process.env.__NEXT_PRIVATE_ORIGIN || 'http://localhost:3000'
 
+const S3_PUBLIC_URL = process.env.S3_PUBLIC_URL || ''
+
+const imageHostnames = [NEXT_PUBLIC_SERVER_URL]
+if (S3_PUBLIC_URL) {
+  imageHostnames.push(S3_PUBLIC_URL)
+}
+
 const nextConfig: NextConfig = {
   output: 'standalone',
 
   images: {
-    remotePatterns: [
-      ...[NEXT_PUBLIC_SERVER_URL].map((item) => {
-        const url = new URL(item)
-        return {
-          hostname: url.hostname,
-          protocol: url.protocol.replace(':', '') as 'http' | 'https',
-        }
-      }),
-    ],
+    remotePatterns: imageHostnames.map((item) => {
+      const url = new URL(item)
+      return {
+        hostname: url.hostname,
+        protocol: url.protocol.replace(':', '') as 'http' | 'https',
+      }
+    }),
   },
 
   sassOptions: {

@@ -7,24 +7,5 @@ services:
         NEXT_PUBLIC_SERVER_URL: https://419.software
     ports:
       - '3053:3000'
-    depends_on:
-      - mongo
     env_file:
       - .env
-    volumes:
-      - media:/app/public/media
-
-  mongo:
-    image: mongo:latest
-    ports:
-      - '27017:27017'
-    command:
-      - --storageEngine=wiredTiger
-    volumes:
-      - data:/data/db
-    logging:
-      driver: none
-
-volumes:
-  data:
-  media:
