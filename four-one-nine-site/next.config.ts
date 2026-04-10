@@ -46,7 +46,7 @@ const nextConfig: NextConfig = {
     },
   },
 
-  serverExternalPackages: ['sharp', '@payloadcms/*', 'payload'],
+  serverExternalPackages: ['sharp', '@payloadcms/*', 'payload', 'react-image-crop'],
 
   images: {
     localPatterns: [
@@ -67,21 +67,23 @@ const nextConfig: NextConfig = {
     includePaths: [payloadScssPath],
   },
 
-  webpack: (webpackConfig, { isServer, webpack }) => {
+  webpack: (webpackConfig, { isServer }) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
       '.mjs': ['.mts', '.mjs'],
     }
     
-    // Ignore CSS imports from react-image-crop during SSR
+    // Replace react-image-crop CSS with empty module during SSR
     if (isServer) {
-      webpackConfig.plugins = webpackConfig.plugins || []
-      webpackConfig.plugins.push(
-        new webpack.IgnorePlugin({
-          resourceRegExp: /ReactCrop\.css$/,
-        })
-      )
+      webpackConfig.module = webpackConfig.module || { rules: [] }
+      webpackConfig.module.rules = [
+        ...webpackConfig.module.rules,
+        {
+          test: /react-image-crop.*\.css$/,
+          loader: 'null-loader',
+        },
+      ]
     }
     
     return webpackConfig
