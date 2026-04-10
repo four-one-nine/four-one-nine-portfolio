@@ -67,23 +67,11 @@ const nextConfig: NextConfig = {
     includePaths: [payloadScssPath],
   },
 
-  webpack: (webpackConfig, { isServer }) => {
+  webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
       '.mjs': ['.mts', '.mjs'],
-    }
-    
-    // Replace react-image-crop CSS with empty module during SSR
-    if (isServer) {
-      webpackConfig.module = webpackConfig.module || { rules: [] }
-      webpackConfig.module.rules = [
-        ...webpackConfig.module.rules,
-        {
-          test: /react-image-crop.*\.css$/,
-          loader: 'null-loader',
-        },
-      ]
     }
     
     return webpackConfig
