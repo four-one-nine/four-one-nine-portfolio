@@ -5,8 +5,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=--no-deprecation next build --webpack",
-    "build:static": "cross-env STATIC_EXPORT=true NODE_OPTIONS=--no-deprecation next build --webpack",
+    "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
+    "build:static": "cross-env STATIC_EXPORT=true NODE_OPTIONS=--no-deprecation next build",
     "export:images": "npx tsx scripts/export-images.ts",
     "prebuild:static": "npm run export:images",
     "deploy:static": "npm run export:images && npm run build:static",
