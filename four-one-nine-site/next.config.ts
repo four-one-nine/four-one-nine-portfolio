@@ -67,23 +67,21 @@ const nextConfig: NextConfig = {
     includePaths: [payloadScssPath],
   },
 
-  webpack: (webpackConfig, { isServer }) => {
+  webpack: (webpackConfig, { isServer, webpack }) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
       '.mjs': ['.mts', '.mjs'],
     }
     
-    // Ignore CSS imports during SSR/build for node_modules
+    // Ignore CSS imports from react-image-crop during SSR
     if (isServer) {
-      webpackConfig.resolve = webpackConfig.resolve || {}
-      webpackConfig.module = webpackConfig.module || {}
-      webpackConfig.module.rules = webpackConfig.module.rules || []
-      webpackConfig.module.rules.push({
-        test: /\.css$/,
-        include: /node_modules/,
-        use: 'null-loader',
-      })
+      webpackConfig.plugins = webpackConfig.plugins || []
+      webpackConfig.plugins.push(
+        new webpack.IgnorePlugin({
+          resourceRegExp: /ReactCrop\.css$/,
+        })
+      )
     }
     
     return webpackConfig
