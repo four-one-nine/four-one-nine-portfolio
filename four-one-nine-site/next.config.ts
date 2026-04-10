@@ -74,9 +74,16 @@ const nextConfig: NextConfig = {
       '.mjs': ['.mts', '.mjs'],
     }
     
-    // Handle CSS files from node_modules during SSR
+    // Ignore CSS imports during SSR/build for node_modules
     if (isServer) {
-      webpackConfig.resolve.conditionNames = ['...', 'style']
+      webpackConfig.resolve = webpackConfig.resolve || {}
+      webpackConfig.module = webpackConfig.module || {}
+      webpackConfig.module.rules = webpackConfig.module.rules || []
+      webpackConfig.module.rules.push({
+        test: /\.css$/,
+        include: /node_modules/,
+        use: 'null-loader',
+      })
     }
     
     return webpackConfig
