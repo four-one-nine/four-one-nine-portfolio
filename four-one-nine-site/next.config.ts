@@ -40,7 +40,7 @@ if (S3_PUBLIC_URL) {
 const nextConfig: NextConfig = {
   output: 'standalone',
 
-  serverExternalPackages: ['sharp', '@payloadcms/*', 'payload'],
+  serverExternalPackages: ['sharp', '@payloadcms/*', 'payload', 'react-image-crop'],
 
   images: {
     localPatterns: [
@@ -93,4 +93,4 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default withPayload(nextConfig, { devBundleServerPackages: false })
+export default withPayload(nextConfig)
