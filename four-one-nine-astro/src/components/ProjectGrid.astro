@@ -1,0 +1,58 @@
+---
+import ProjectCard from './ProjectCard.astro'
+
+interface Props {
+  projects: Array<{
+    slug: string
+    data: {
+      title: string
+      description: string
+      featuredImage: string
+      category: string
+      externalUrl?: string
+      tags?: string[]
+    }
+  }>
+}
+
+const { projects } = Astro.props;
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+  {projects.map((project, index) => {
+    const isWide = index % 2 === 0;
+    const rowIndex = Math.floor(index / 2) + 1;
+    const narrowOnLeft = Math.floor(index / 2) % 2 === 0;
+
+    let gridClass = 'grid-item';
+    const style: { [key: string]: string } = { animationDelay: `${index * 0.1}s` };
+
+    if (isWide) {
+      gridClass += ' lg:col-span-2';
+      style.gridRow = String(rowIndex);
+      if (narrowOnLeft) {
+        style.gridColumn = '2 / 4';
+      }
+    } else {
+      style.gridRow = String(rowIndex);
+      if (!narrowOnLeft) {
+        style.gridColumn = '3';
+      }
+    }
+
+    return (
+      <div class={gridClass} style={style}>
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          featuredImage={project.data.featuredImage}
+          category={project.data.category}
+          externalUrl={project.data.externalUrl}
+          slug={project.slug}
+          isWide={isWide}
+          tags={project.data.tags}
+        />
+      </div>
+    );
+  })}
+</div>

@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Output
+dist/
+
+# Environment
+.env
+.env.*
+
+# Tina CMS
+.tina/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Astro
+.astro/

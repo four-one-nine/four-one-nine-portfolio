@@ -1,0 +1,34 @@
+---
+import aboutData from '../data/about.json';
+
+const { name, photo, blurb } = aboutData;
+---
+
+<div class="h-full flex flex-col overflow-hidden p-6 lg:p-8">
+  <div class="flex items-center gap-4 pb-6 -mx-6 lg:-mx-8 px-6 lg:px-8 shrink-0" style="border-bottom: 1px solid rgba(55, 55, 55, 0.5);">
+    <div class="relative w-16 h-16 flex-shrink-0">
+      <img src="/logos/Black on Yellow.png" alt="four.one.nine" class="w-full h-full object-contain" />
+    </div>
+    <div class="flex flex-col">
+      <h1 class="font-mono text-2xl lg:text-3xl font-bold tracking-tight" style="color: #373737;">
+        {name}
+      </h1>
+    </div>
+  </div>
+
+  <div class="-mx-6 lg:-mx-8 flex-1 min-h-0 overflow-hidden" style="border-bottom: 1px solid rgba(55, 55, 55, 0.5);">
+    <div class="relative w-full h-full">
+      <img src={photo} alt={name} class="w-full h-full object-cover" />
+    </div>
+  </div>
+
+  <div class="shrink-0 py-6 -mx-6 lg:-mx-8 px-6 lg:px-8" style="border-bottom: 1px solid rgba(55, 55, 55, 0.5);">
+    <p class="text-sm leading-relaxed" style="color: #373737;">{blurb}</p>
+  </div>
+
+  <div class="shrink-0 pt-6">
+    <a href="/contact" class="get-in-touch" style="color: #373737;">
+      Get in touch →
+    </a>
+  </div>
+</div>

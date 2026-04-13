@@ -1,0 +1,47 @@
+---
+interface Props {
+  title: string
+  description?: string
+  featuredImage: string
+  category: string
+  externalUrl?: string
+  slug: string
+  isWide: boolean
+  tags?: string[]
+}
+
+const { title, description, featuredImage, category, externalUrl, slug, isWide, tags } = Astro.props;
+
+const linkHref = externalUrl || `/projects/${slug}`;
+const isExternal = !!externalUrl;
+
+const borderStyle = { borderRight: '1px solid rgba(55, 55, 55, 0.5)', borderBottom: '1px solid rgba(55, 55, 55, 0.5)' };
+---
+
+<div class="flex flex-col h-full">
+  <a href={linkHref} class="project-card group relative overflow-hidden aspect-[3/2] block" style={borderStyle} {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+    <img src={featuredImage} alt={title} class="project-image object-cover w-full h-full transition-opacity duration-300" loading="lazy" />
+    {isWide && (
+      <div class="project-overlay hidden lg:flex absolute inset-0 p-6 flex-col justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ backgroundColor: 'rgba(55, 55, 55, 0.8)' }}>
+        <div class="space-y-3">
+          <h3 class="text-primary font-mono text-xl font-semibold" style={{ color: '#DDD92A' }}>{title}</h3>
+          {description && <p class="text-white/90 text-sm line-clamp-4">{description}</p>}
+          {category && <div class="text-primary/80 text-xs font-mono uppercase tracking-wider" style={{ color: 'rgba(221, 217, 42, 0.8)' }}>{category}</div>}
+          <span class="inline-block text-primary text-sm font-medium hover:underline" style={{ color: '#DDD92A' }}>
+            {isExternal ? 'View project →' : 'Read case study →'}
+          </span>
+        </div>
+      </div>
+    )}
+  </a>
+  <div class="flex-grow p-4" style={borderStyle}>
+    <div class="space-y-2">
+      <h3 class="font-mono text-lg font-semibold">{title}</h3>
+      {description && <p class="text-sm line-clamp-4" style={{ color: '#373737' }}>{description}</p>}
+      {category && <div class="text-xs font-mono uppercase tracking-wider" style={{ color: '#373737', opacity: 0.7 }}>{category}</div>}
+      <a href={linkHref} class="inline-block text-sm font-medium hover:underline" style={{ color: '#373737' }} {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+        {isExternal ? 'View project →' : 'Read case study →'}
+      </a>
+    </div>
+  </div>
+</div>

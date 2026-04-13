@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectGrid from '../components/ProjectGrid.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects', ({ data }) => data.status === 'published');
+const sortedProjects = allProjects.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+const allCategories = [...new Set(allProjects.map(p => p.data.category))];
+const categoryLabels: Record<string, string> = {
+  'software': 'Software',
+  'media': 'Media',
+  'engineering': 'Engineering',
+};
+
+const currentCategory = Astro.url.searchParams.get('category');
+const filteredProjects = currentCategory
+  ? sortedProjects.filter(p => p.data.category === currentCategory)
+  : sortedProjects;
+---
+
+<BaseLayout title="four.one.nine | Portfolio" description="Creative developer & designer portfolio">
+  <div class="pt-4 lg:pt-8">
+    <header class="space-y-2 pb-6 px-4 lg:px-8" style="border-bottom: 1px solid rgba(55, 55, 55, 0.5);">
+      <h2 class="font-mono text-3xl font-bold">projects</h2>
+    </header>
+
+    <div class="px-4 lg:px-8" style="border-bottom: 1px solid rgba(55, 55, 55, 0.5);">
+      <div class="filter-buttons">
+        <a href="/" class={`filter-btn ${!currentCategory ? 'active' : ''}`}>
+          <span class="btn-text">All</span>
+          <span class="btn-bg"></span>
+        </a>
+        {allCategories.map((cat) => (
+          <a href={`/?category=${cat}`} class={`filter-btn ${currentCategory === cat ? 'active' : ''}`}>
+            <span class="btn-text">{categoryLabels[cat] || cat}</span>
+            <span class="btn-bg"></span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="-mt-px lg:-ml-px" style="border-top: 1px solid rgba(55, 55, 55, 0.5); border-left: 1px solid rgba(55, 55, 55, 0.5);">
+      <ProjectGrid projects={filteredProjects} />
+    </div>
+  </div>
+</BaseLayout>

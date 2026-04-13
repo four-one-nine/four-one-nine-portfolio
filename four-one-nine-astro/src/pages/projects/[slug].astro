@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => data.status === 'published');
+  return projects.map(project => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+---
+
+<BaseLayout title={project.data.title} description={project.data.description} image={project.data.featuredImage}>
+  <article class="pt-16 pb-16 px-4 lg:px-8">
+    <div class="max-w-3xl mx-auto">
+      {project.data.featuredImage && (
+        <img src={project.data.featuredImage} alt={project.data.title} class="w-full rounded-xl mb-8" />
+      )}
+      <h1 class="font-mono text-4xl font-bold mb-4">{project.data.title}</h1>
+      {project.data.category && (
+        <div class="text-xs font-mono uppercase tracking-wider mb-8" style={{ color: '#373737', opacity: 0.7 }}>
+          {project.data.category.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+        </div>
+      )}
+      {project.data.externalUrl && (
+        <a href={project.data.externalUrl} target="_blank" rel="noopener noreferrer" class="inline-block mb-8 text-sm font-medium hover:underline" style={{ color: '#373737' }}>
+          View live project →
+        </a>
+      )}
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

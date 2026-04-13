@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Contact | four.one.nine" description="Get in touch">
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4" style="background-color: rgba(55, 55, 55, 0.9);">
+    <div class="bg-white rounded-2xl w-full max-w-md p-8 space-y-6 relative">
+      <a href="/" class="absolute top-4 right-4 text-2xl" style="color: rgba(55, 55, 55, 0.5);">x</a>
+
+      <h3 class="font-mono text-2xl font-bold">Get in touch</h3>
+      <form action="https://formspree.io/f/your-form-id" method="POST" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Name</label>
+          <input type="text" name="name" required class="w-full px-4 py-2 rounded-xl border" style="border-color: rgba(55, 55, 55, 0.2);" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Email</label>
+          <input type="email" name="email" required class="w-full px-4 py-2 rounded-xl border" style="border-color: rgba(55, 55, 55, 0.2);" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Subject</label>
+          <input type="text" name="subject" required class="w-full px-4 py-2 rounded-xl border" style="border-color: rgba(55, 55, 55, 0.2);" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Message</label>
+          <textarea name="message" rows={4} required class="w-full px-4 py-2 rounded-xl border" style="border-color: rgba(55, 55, 55, 0.2);"></textarea>
+        </div>
+        <button type="submit" class="w-full font-sans font-bold py-3 rounded-xl" style="background-color: #373737; color: #DDD92A;">
+          Send message
+        </button>
+      </form>
+    </div>
+  </div>
+</BaseLayout>

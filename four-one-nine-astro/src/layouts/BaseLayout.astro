@@ -1,0 +1,41 @@
+---
+import Sidebar from '../components/Sidebar.astro'
+import '../styles/global.css'
+
+interface Props {
+  title?: string
+  description?: string
+  image?: string
+}
+
+const { title = 'four.one.nine | Portfolio', description = 'Creative developer & designer portfolio', image } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    {image && <meta property="og:image" content={image} />}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="/favicon.ico" rel="icon" sizes="32x32" />
+    <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+  </head>
+  <body style="background-color: #DDD92A; color: #373737;">
+    <div class="flex flex-col lg:flex-row min-h-screen">
+      <aside class="w-full lg:w-1/4 lg:sticky lg:top-0 lg:h-screen overflow-y-auto border-b lg:border-b-0 lg:border-r" style="background-color: #DDD92A; color: #373737; border-color: rgba(55, 55, 55, 0.5);">
+        <Sidebar />
+      </aside>
+      <main class="w-full lg:w-3/4" style="background-color: #DDD92A;">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>

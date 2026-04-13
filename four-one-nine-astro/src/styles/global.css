@@ -1,0 +1,243 @@
+@import 'tailwindcss';
+
+@theme {
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 86rem;
+  --font-mono: 'Doto', monospace;
+  --font-sans: 'Inter', sans-serif;
+  --color-primary: #DDD92A;
+  --color-dark: #373737;
+  --color-background: #DDD92A;
+  --color-foreground: #373737;
+}
+
+:root {
+  --bg-color: #DDD92A;
+  --text-color: #373737;
+  --border-color: rgba(55, 55, 55, 0.5);
+  --overlay-bg: rgba(55, 55, 55, 0.8);
+  --overlay-text: #DDD92A;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1a1a1a;
+    --text-color: #DDD92A;
+    --border-color: rgba(221, 217, 42, 0.3);
+    --overlay-bg: rgba(221, 217, 42, 0.15);
+    --overlay-text: #DDD92A;
+  }
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Doto', monospace;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/* Project card animations */
+.project-card .project-image {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.project-card:hover .project-image {
+  opacity: 0;
+}
+
+.project-card .project-overlay {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.project-card:hover .project-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-card {
+  animation: slideUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.grid-item {
+  height: 100%;
+}
+
+.grid-item > * {
+  height: 100%;
+}
+
+/* Category filter buttons */
+.filter-buttons {
+  display: flex;
+}
+
+.filter-btn {
+  flex: 0 0 auto;
+  position: relative;
+  overflow: hidden;
+  background: #DDD92A;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  height: 100%;
+  border-right: 1px solid rgba(55, 55, 55, 0.5);
+}
+
+.filter-btn:first-of-type {
+  border-left: 1px solid rgba(55, 55, 55, 0.5);
+}
+
+.filter-btn .btn-text {
+  position: relative;
+  z-index: 2;
+  display: block;
+  padding: 12px 16px;
+  font-family: 'Doto', monospace;
+  font-weight: 700;
+  font-size: 14px;
+  color: #373737;
+}
+
+.filter-btn .btn-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #373737;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.filter-btn:hover .btn-bg {
+  transform: translateY(0);
+}
+
+.filter-btn:hover .btn-text {
+  color: #DDD92A;
+}
+
+.filter-btn.active .btn-bg {
+  transform: translateY(0);
+}
+
+.filter-btn.active .btn-text {
+  color: #DDD92A;
+}
+
+/* Get in touch link */
+.get-in-touch {
+  position: relative;
+  display: inline-block;
+  font-family: 'Doto', monospace;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.get-in-touch::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #373737;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.get-in-touch:hover::after {
+  transform: translateX(0);
+}
+
+/* Prose styles for blog content */
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-family: 'Doto', monospace;
+  font-weight: 700;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose h1 { font-size: 1.875rem; }
+.prose h2 { font-size: 1.5rem; }
+.prose h3 { font-size: 1.25rem; }
+.prose h4 { font-size: 1.125rem; }
+
+.prose p {
+  margin-bottom: 1em;
+  line-height: 1.75;
+}
+
+.prose img {
+  border-radius: 0.5rem;
+  margin: 1.5em 0;
+}
+
+.prose a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose a:hover {
+  opacity: 0.8;
+}
+
+.prose ul, .prose ol {
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+}
+
+.prose li {
+  margin-bottom: 0.25em;
+}
+
+.prose blockquote {
+  border-left: 3px solid rgba(55, 55, 55, 0.3);
+  padding-left: 1em;
+  margin: 1.5em 0;
+  font-style: italic;
+}
+
+.prose pre {
+  background: rgba(55, 55, 55, 0.1);
+  border-radius: 0.5rem;
+  padding: 1em;
+  overflow-x: auto;
+  margin: 1.5em 0;
+}
+
+.prose code {
+  background: rgba(55, 55, 55, 0.1);
+  padding: 0.15em 0.3em;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid rgba(55, 55, 55, 0.3);
+  margin: 2em 0;
+}
