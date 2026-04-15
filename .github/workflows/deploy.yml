@@ -37,5 +37,4 @@ jobs:
           server-dir: ${{ secrets.FTP_REMOTE_DIR }}
           exclude: |
             **/.git*
-            **/.git*/
-**
+            "**/.git*/**"
