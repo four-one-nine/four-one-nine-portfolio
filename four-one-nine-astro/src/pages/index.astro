@@ -6,7 +6,7 @@ import { getCollection } from 'astro:content';
 const allProjects = await getCollection('projects', ({ data }) => data.status === 'published');
 const sortedProjects = allProjects.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
 
-const allCategories = [...new Set(allProjects.map(p => p.data.category))];
+const allCategories = [...new Set(allProjects.map(p => p.data.category))].sort();
 const categoryLabels: Record<string, string> = {
   'software': 'Software',
   'media': 'Media',

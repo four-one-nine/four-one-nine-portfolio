@@ -18,7 +18,7 @@ interface Props {
 const { projects } = Astro.props;
 ---
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+<div class="project-grid grid grid-cols-1 lg:grid-cols-3 items-stretch">
   {projects.map((project, index) => {
     const isWide = index % 2 === 0;
     const rowIndex = Math.floor(index / 2) + 1;
@@ -29,14 +29,14 @@ const { projects } = Astro.props;
 
     if (isWide) {
       gridClass += ' lg:col-span-2';
-      style.gridRow = String(rowIndex);
+      style['--grid-row'] = String(rowIndex);
       if (narrowOnLeft) {
-        style.gridColumn = '2 / 4';
+        style['--grid-column'] = '2 / 4';
       }
     } else {
-      style.gridRow = String(rowIndex);
+      style['--grid-row'] = String(rowIndex);
       if (!narrowOnLeft) {
-        style.gridColumn = '3';
+        style['--grid-column'] = '3';
       }
     }
 

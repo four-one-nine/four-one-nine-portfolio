@@ -1,11 +1,38 @@
 ---
-title: "The Homelab"
-description: "I first put together a server when I was about 14 so that I could transfer files from my computer to my phone wirelessly over my network. Since then, my home's arrangement of computers and equipment has grown not just in complexity, but also capability."
-featuredImage: "/images/homelab.jpg"
+title: The Homelab
+description: 'I first put together a server when I was about 14 so that I could transfer files from my computer to my phone wirelessly over my network. Since then, my home''s arrangement of computers and equipment has grown not just in complexity, but also capability.'
+featuredImage: /images/the-homelab.jpg
 category: engineering
-tags: ["Self-Hosting", "Networking", "Infrastructure"]
-publishedAt: 2026-03-26
+tags:
+  - Self-Hosting
+  - Networking
+  - Infrastructure
+publishedAt: 2026-03-26T00:00:00.000Z
 status: published
 ---
 
-I first put together a server when I was about 14 so that I could transfer files from my computer to my phone wirelessly over my network. Since then, my home's arrangement of computers and equipment has grown not just in complexity, but also capability. When I began taking an interest in securing my privacy from the ever-encroaching data-munchers we call Big Tech, the more I began seeing the value in putting in the effort to host it myself.
+## How it began
+
+When I was about 14, I had an android media player (this is back when iPods were popular, I didn't have a cell phone) I wanted to be able to transfer files to it without utilizing a cable. At the time, many of the modern tools we use to transfer files didn't exist. My solution was to set up a server, which was an extra computer my parents weren't using that I installed Ubuntu on and set up a network file share. This allowed me to drop files on it and share them between my android media player and my desktop computer. This time period also coincided with a number of other hobbies of mine— namely my growing interest in software development, videography and photography. 
+
+## The first real server
+
+My first “real” server actually came a couple years later. As my videography and photography interest grew into a collection of youtube channels I managed with my friends, I found myself in need of a place to store all of the footage and photos that I was taking. The solution I came to was to build a NAS, which ended up being a server made of 4x 3TB hard drives. Because of my lack of real know-how with servers, I spent two days trying to get an operating system installed and ended up settling on windows 7. 
+
+## The slow transformation
+
+This server actually stuck around for quite a while in different forms, slowly transforming over time. it moved from a 4-drive NAS case into a full tower case as it expanded in its scope and use. I traded windows 7 for windows server 2012 and then, eventually, I decided to venture into moving the server to ESXi to be able to use it to do more virtual machines. 
+
+### Open-source and Privacy-focused
+
+While I've always had an interest in technology, one of the things I've noticed is the alarming trend that was companies being increasingly invasive. Alongside that, I was needing to have tools at my disposal that I wanted to avoid paying for, and I began diving into the open-source community as a means to self-host tools like cloud-storage, password managers, and minecraft servers without the need of paying someone to do so. As the tech companies became more profit-driven and less respectful of their users, my enjoyment shifted from not just being able to save money, but also being able to claw back some of the control over my own digital footprint. 
+
+## The Current Homelab
+
+My current homelab consists of two servers and a number of clients. The first server utilizes unRAID to act as my primary storage for all my photos and videos. I settled on unRAID because I wanted something that would be extremely flexible and also wouldn't force me into anything proprietary. unRAID's ability to mix and match drives of all sizes was a key factor in the first goal and the latter was accomplished by the fact that their storage architecture uses simple, flat-file storage so that even if I switch away from unRAID in the future, all my unRAID drives can simply be dropped into another machine and read. The downside of unRAID is that due to the way that it calculates parity means that it's capped at 100Mb/s write speeds, making it mostly unsuitable for more I/O heavy tasks. 
+
+My second server is still running ESXI, which then has a number of virtual machines running all kinds of different tools. These range from my own Nextcloud instance to a machine runnning portainer to manage a number of docker containers. This machine is less intense on storage, but still packs a couple dozen terabytes that pass through to a TrueNAS instance, which shares storage with any of the other machines that need it. 
+
+The final piece of the puzzle is actually one of the clients, my main desktop PC, is also a part-time server. The reason? Local AI. Since my desktop is what I use for editing videos and photos, it has the most powerful GPU in the household, which came in handy hen exploring hosting local AI models. I spun up an instance of LM Studio and have been using it for local AI development. 
+
+##

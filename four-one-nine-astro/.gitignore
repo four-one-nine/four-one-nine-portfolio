@@ -10,6 +10,7 @@ dist/
 
 # Tina CMS
 .tina/
+public/admin/
 
 # IDE
 .vscode/

@@ -1,11 +1,28 @@
 ---
-title: "3D Model Image Generator"
-description: "This application was one of my first forays into the world of AI development. Written in React and packaged with Electron, this application was built with the purpose of helping to generate the images used on my printables page."
-featuredImage: "/images/3d-model-gen.jpg"
+title: three-d-model-image
+description: 'This application was one of my first forays into the world of AI development. Written in React and packaged with Electron, this application was built with the purpose of helping to generate the images used on my printables page.'
+featuredImage: /images/three-d-model-pics.png
 category: software
-tags: ["React", "AI", "Electron"]
-publishedAt: 2026-03-24
+tags:
+  - React
+  - AI
+  - Electron
+publishedAt: 2026-03-24T00:00:00.000Z
 status: published
 ---
 
-This application was one of my first forays into the world of AI development. Written in React and packaged with Electron, this application was built with the purpose of helping to generate the images used on my printables page.
+One of my favorite things when browsing 3D prints is noticing some of the users that build a bit of a brand around their 3D prints. This brand gives them an identifiable style that causes users who download prints to follow specific people for the kinds of things they design. One of the major ways that people develop this type of brand is by using incredibly consistent thumbnails on their models when posting them for download, giving users a recognizable color scheme to notice. 
+
+While I'm not going to become one of these top designers anytime soon, I did find the creation of consistent thumbnails to be incredibly pleasing, and really wanted to do that for myself. There was really only one major hurdle to that, and that was actually making the thumbnails….
+
+## The Options
+
+There were two ways that I was aware at the time to make these 3D models renders. The first was to use a 3D rendering software or game engine like Unreal Engine or Blender. This is what a lot of people do. The problem with this solution for me is that I don't have the time to invest in really doing that for every model I make, as I usually am investing a very minimal amount of time in each model. The second option was to use easier rendering tools like the one built-in to Fusion 360. This works great for my purpose, but my main issue with it is that it ties me down to Fusion 360 as my modeling software if I want to keep rendering my images, which I was already actively toying around with jumping to FreeCAD or Plasticity. 
+
+### A New Idea Arrived
+
+The idea came to me when I was toying around with some agentic programming for the first time. Maybe I could make an application that is for this purpose? I had read about ThreeJS a while back, and had never dove that deep into it. This could be an opportunity to explore using ThreeJS to create an application that does this rendering for me. 
+
+## The Project Structure
+
+The application is written primarily in React and using ThreeJS. It's then packaged into a desktop application using Electron. When I knew I wanted to use ThreeJS, React and Electron became a natural choice paring because I knew that I wanted it to also be a desktop app, so I would need both a web framework and a packaging tool to make a web-based application operate like a desktop application. 

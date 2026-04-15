@@ -1,0 +1,23 @@
+fragment ProjectsParts on Projects {
+  __typename
+  title
+  description
+  featuredImage
+  category
+  tags
+  externalUrl
+  publishedAt
+  status
+  body
+}
+
+fragment PostsParts on Posts {
+  __typename
+  title
+  description
+  heroImage
+  publishedAt
+  categories
+  status
+  body
+}
