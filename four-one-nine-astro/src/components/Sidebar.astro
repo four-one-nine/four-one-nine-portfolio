@@ -5,16 +5,16 @@ const { name, photo, blurb } = aboutData;
 ---
 
 <div class="h-full flex flex-col overflow-hidden p-6 lg:p-8">
-  <div class="flex items-center gap-4 pb-6 -mx-6 lg:-mx-8 px-6 lg:px-8 shrink-0" style="border-bottom: 1px solid rgba(55, 55, 55, 0.5);">
+  <a href="/" class="flex items-center gap-4 pb-6 -mx-6 lg:-mx-8 px-6 lg:px-8 shrink-0" style="border-bottom: 1px solid rgba(55, 55, 55, 0.5);">
     <div class="relative w-16 h-16 flex-shrink-0">
       <img src="/logos/Black on Yellow.png" alt="four.one.nine" class="w-full h-full object-contain" />
     </div>
     <div class="flex flex-col">
       <h1 class="font-mono text-2xl lg:text-3xl font-bold tracking-tight" style="color: #373737;">
-        {name}
+        <span class="scramble-text" data-text="four.one.nine">four.one.nine</span>
       </h1>
     </div>
-  </div>
+  </a>
 
   <div class="-mx-6 lg:-mx-8 flex-1 min-h-0 overflow-hidden" style="border-bottom: 1px solid rgba(55, 55, 55, 0.5);">
     <div class="relative w-full h-full">
@@ -27,8 +27,42 @@ const { name, photo, blurb } = aboutData;
   </div>
 
   <div class="shrink-0 pt-6">
-    <a href="/contact" class="get-in-touch" style="color: #373737;">
-      Get in touch →
+    <a href="/contact" class="get-in-touch">
+      <span class="btn-text">Get in touch →</span>
+      <span class="btn-bg"></span>
     </a>
   </div>
-</div>
+
+<script>
+  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+  const scrambleElements = document.querySelectorAll('.scramble-text');
+
+  function scramble(el: HTMLElement) {
+    const original = el.dataset.text || el.textContent || '';
+    const length = original.length;
+    let iteration = 0;
+    const interval = setInterval(() => {
+      el.textContent = original
+        .split('')
+        .map((char, index) => {
+          if (char === '.' || index < iteration) return original[index];
+          return chars[Math.floor(Math.random() * chars.length)];
+        })
+        .join('');
+      iteration += 1 / 2;
+      if (iteration >= length) {
+        el.textContent = original;
+        clearInterval(interval);
+      }
+    }, 30);
+    return interval;
+  }
+
+  scrambleElements.forEach(el => {
+    let interval: ReturnType<typeof setInterval> | null = null;
+    el.addEventListener('mouseenter', () => {
+      if (interval) clearInterval(interval);
+      interval = scramble(el as HTMLElement);
+    });
+  });
+</script>

@@ -12,11 +12,6 @@ const categoryLabels: Record<string, string> = {
   'media': 'Media',
   'engineering': 'Engineering',
 };
-
-const currentCategory = Astro.url.searchParams.get('category');
-const filteredProjects = currentCategory
-  ? sortedProjects.filter(p => p.data.category === currentCategory)
-  : sortedProjects;
 ---
 
 <BaseLayout title="four.one.nine | Portfolio" description="Creative developer & designer portfolio">
@@ -27,12 +22,12 @@ const filteredProjects = currentCategory
 
     <div class="px-4 lg:px-8" style="border-bottom: 1px solid rgba(55, 55, 55, 0.5);">
       <div class="filter-buttons">
-        <a href="/" class={`filter-btn ${!currentCategory ? 'active' : ''}`}>
+        <a href="/" class="filter-btn active" data-category="">
           <span class="btn-text">All</span>
           <span class="btn-bg"></span>
         </a>
         {allCategories.map((cat) => (
-          <a href={`/?category=${cat}`} class={`filter-btn ${currentCategory === cat ? 'active' : ''}`}>
+          <a href={`/?category=${cat}`} class="filter-btn" data-category={cat}>
             <span class="btn-text">{categoryLabels[cat] || cat}</span>
             <span class="btn-bg"></span>
           </a>
@@ -41,7 +36,58 @@ const filteredProjects = currentCategory
     </div>
 
     <div class="-mt-px lg:-ml-px" style="border-top: 1px solid rgba(55, 55, 55, 0.5); border-left: 1px solid rgba(55, 55, 55, 0.5);">
-      <ProjectGrid projects={filteredProjects} />
+      <ProjectGrid projects={sortedProjects} />
     </div>
   </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.filter-btn');
+    const allItems = document.querySelectorAll('.grid-item');
+
+    function layoutItems(category: string) {
+      const visible = [...allItems].filter(item => {
+        const el = item as HTMLElement;
+        const match = !category || el.dataset.category === category;
+        el.style.display = match ? '' : 'none';
+        return match;
+      });
+
+      visible.forEach((item, index) => {
+        const el = item as HTMLElement;
+        const isWide = index % 2 === 0;
+        const rowIndex = Math.floor(index / 2) + 1;
+        const narrowOnLeft = Math.floor(index / 2) % 2 === 0;
+
+        el.style.setProperty('--grid-row', String(rowIndex));
+
+        if (isWide) {
+          el.dataset.wide = '';
+          el.style.removeProperty('--grid-column');
+          el.style.setProperty('--grid-column-wide', narrowOnLeft ? '2 / 4' : '1 / 3');
+        } else {
+          delete el.dataset.wide;
+          el.style.removeProperty('--grid-column-wide');
+          el.style.setProperty('--grid-column', narrowOnLeft ? '1' : '3');
+        }
+      });
+
+      buttons.forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.querySelector(`.filter-btn[data-category="${category}"]`);
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const category = (btn as HTMLElement).dataset.category || '';
+        layoutItems(category);
+        const url = category ? `/?category=${category}` : '/';
+        history.pushState({}, '', url);
+      });
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const initialCategory = params.get('category') || '';
+    layoutItems(initialCategory);
+</script>
 </BaseLayout>

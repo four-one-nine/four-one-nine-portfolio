@@ -27,21 +27,16 @@ const { projects } = Astro.props;
     let gridClass = 'grid-item';
     const style: { [key: string]: string } = { animationDelay: `${index * 0.1}s` };
 
+    style['--grid-row'] = String(rowIndex);
+
     if (isWide) {
-      gridClass += ' lg:col-span-2';
-      style['--grid-row'] = String(rowIndex);
-      if (narrowOnLeft) {
-        style['--grid-column'] = '2 / 4';
-      }
+      style['--grid-column-wide'] = narrowOnLeft ? '2 / 4' : '1 / 3';
     } else {
-      style['--grid-row'] = String(rowIndex);
-      if (!narrowOnLeft) {
-        style['--grid-column'] = '3';
-      }
+      style['--grid-column'] = narrowOnLeft ? '1' : '3';
     }
 
     return (
-      <div class={gridClass} style={style}>
+      <div class={gridClass} style={style} data-category={project.data.category} data-wide={isWide || undefined}>
         <ProjectCard
           title={project.data.title}
           description={project.data.description}
@@ -49,7 +44,6 @@ const { projects } = Astro.props;
           category={project.data.category}
           externalUrl={project.data.externalUrl}
           slug={project.slug}
-          isWide={isWide}
           tags={project.data.tags}
         />
       </div>
